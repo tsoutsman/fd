@@ -427,7 +427,6 @@ fn spawn_senders(
                                 .metadata()
                                 .map(|m| filesystem::is_executable(&m))
                                 .unwrap_or(false))
-                        || (file_types.empty_only && !filesystem::is_empty(&entry))
                         || !(entry_type.is_file()
                             || entry_type.is_dir()
                             || entry_type.is_symlink()
@@ -488,6 +487,11 @@ fn spawn_senders(
                 if !matched {
                     return ignore::WalkState::Continue;
                 }
+            }
+
+            // Filter out non-empty items.
+            if config.empty_only && !filesystem::is_empty(&entry) {
+                return ignore::WalkState::Continue;
             }
 
             let send_result = tx_thread.send(WorkerResult::Entry(entry_path.to_owned()));

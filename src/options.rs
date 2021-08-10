@@ -102,4 +102,7 @@ pub struct Options {
 
     /// The maximum number of search results
     pub max_results: Option<usize>,
+
+    /// Whether or not to only include empty items in the results
+    pub empty_only: bool,
 }

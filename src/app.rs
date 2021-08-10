@@ -248,8 +248,6 @@ pub fn build_app() -> App<'static, 'static> {
                     "symlink",
                     "x",
                     "executable",
-                    "e",
-                    "empty",
                     "s",
                     "socket",
                     "p",
@@ -258,7 +256,7 @@ pub fn build_app() -> App<'static, 'static> {
                 .hide_possible_values(true)
                 .help(
                     "Filter by type: file (f), directory (d), symlink (l),\nexecutable (x), \
-                         empty (e), socket (s), pipe (p)",
+                         socket (s), pipe (p)",
                 )
                 .long_help(
                     "Filter the search by type (multiple allowable filetypes can be specified):\n  \
@@ -266,7 +264,6 @@ pub fn build_app() -> App<'static, 'static> {
                        'd' or 'directory':    directories\n  \
                        'l' or 'symlink':      symbolic links\n  \
                        'x' or 'executable':   executables\n  \
-                       'e' or 'empty':        empty files or directories\n  \
                        's' or 'socket':       socket\n  \
                        'p' or 'pipe':         named pipe (FIFO)",
                 ),
@@ -570,6 +567,14 @@ pub fn build_app() -> App<'static, 'static> {
                     "Provide paths to search as an alternative to the positional <path> \
                          argument. Changes the usage to `fd [FLAGS/OPTIONS] --search-path <path> \
                          --search-path <path2> [<pattern>]`",
+                ),
+        )
+        .arg(
+            Arg::with_name("empty")
+                .long("empty")
+                .takes_value(false)
+                .long_help(
+                    "Only include empty items in search results."
                 ),
         );
 
